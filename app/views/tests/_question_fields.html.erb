@@ -3,21 +3,23 @@
 
   <div id="choices">
 
-    <% if @test.question_type.name == "Multiple choice" %>
+    <% if @test.question_type.try(:name) == "Multiple choice" %>
         <%= f.simple_fields_for :choices do |choice| %>
             <%= render "choice_fields", f: choice %>
         <% end %>
     <% else %>
+        <%= f.simple_fields_for :choices do |choice| %>
         <div class="nested-fields">
           <div class="form-horizontal form-inline">
             <%#= f.input :content , as: :radio_buttons , :label => false , :readonly => true %>
-            <%= f.input :content,collection: [[true, "True"] , [false, "False"]] , :label_method => :last,
+            <%= choice.input :content,collection: [[true, "True"] , [false, "False"]] , :label_method => :last,
                         :value_method => :first, :as => :radio_buttons , label: false %>
 
           </div>
         </div>
+        <% end %>
     <% end %>
-    <% if @test.question_type.name == "Multiple choice" %>
+    <% if @test.question_type.try(:name) == "Multiple choice" %>
         <div class="links">
           <%= link_to_add_association 'add choices', f, :choices  , :class => "btn btn-success btn-xs"%>
         </div>
