@@ -1,0 +1,13 @@
+<div class="nested-fields">
+  <div class="form-horizontal form-inline">
+        <%#= f.input :content , as: :radio_buttons , :label => false , :readonly => true %>
+    <%= f.input :content,collection: [[true, "True"] , [false, "False"]] , :label_method => :last,
+                :value_method => :first, :as => :radio_buttons , label: false %>
+
+  </div>
+
+  <% if @test.question_type.name == "Multiple choice" %>
+  <%=  link_to_remove_association "remove choice", f %>
+  <% end  %>
+
+</div>

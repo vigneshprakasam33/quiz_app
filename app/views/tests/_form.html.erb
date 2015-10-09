@@ -1,0 +1,53 @@
+<div class="row">
+  <div class="col-sm-4 col-sm-offset-4">
+    <%= simple_form_for(@test) do |f| %>
+        <% if @test.errors.any? %>
+            <div id="error_explanation">
+              <h2><%= pluralize(@test.errors.count, "error") %> prohibited this test from being saved:</h2>
+
+              <ul>
+                <% @test.errors.full_messages.each do |msg| %>
+                    <li><%= msg %></li>
+                <% end %>
+              </ul>
+            </div>
+        <% end %>
+
+        <div class="field">
+            <%= f.input :name %>
+        </div>
+
+        <%= f.association :question_type , :label => "Type"  , :include_blank => false %>
+
+        <div id="question">
+          <%= f.simple_fields_for :questions do |question| %>
+            <%= render "question_fields" , f: question %>
+          <% end %>
+          <div class="links">
+            <%= link_to_add_association 'add questions', f, :questions , :class => "btn btn-success btn-md"%>
+          </div>
+        </div>
+
+        <br>
+        <div class="actions">
+          <%= f.submit :value => "Save" , :class => "btn btn-success"%>
+          <%= link_to "Cancel" , new_test_path ,:class => "btn btn-primary"%>
+        </div>
+    <% end %>
+
+  </div>
+</div>
+
+
+<script>
+    $(function(){
+        // bind change event to select
+        $('#test_question_type_id').on('change', function () {
+            var url = "/tests/new?type=" + $(this).val();
+            if (url) { // require a URL
+                window.location = url; // redirect
+            }
+            return false;
+        });
+    });
+</script>

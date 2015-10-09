@@ -1,0 +1,14 @@
+<div class="nested-fields">
+  <div class="form-horizontal form-inline">
+
+    <%= f.label :selected do %>
+        <%= f.input :selected , as: :boolean   , label: false  ,:wrapper => false  %>
+        <%= f.input_field :content , :label => false , :read_only => true%>
+    <% end  %>
+
+
+  </div>
+
+  <%=  link_to_remove_association "remove choice", f , :class => "btn btn-danger btn-xs" %>
+
+</div>
